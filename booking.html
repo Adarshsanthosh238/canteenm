@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Your Order - Food Delivery</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="booking-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>Food Ordering</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="menu.html" class="active">Order Now</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help.html">help</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="booking-banner">
+            <h1>Place Your Order</h1>
+            <p>Just a few details to get your delicious food delivered!</p>
+        </div>
+
+        <div class="booking-container">
+            <form id="orderForm" class="booking-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="input-field" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" class="input-field" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="deliveryTime">Delivery Time</label>
+                    <select id="deliveryTime" name="deliveryTime" class="input-field" required>
+                        <option value="">Select delivery time</option>
+                        <option value="now">As soon as possible</option>
+                        <option value="30min">In 30 minutes</option>
+                        <option value="1hr">In 1 hour</option>
+                        <option value="1:30min">In 1:30 hours</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemCount">Number of Food Items</label>
+                    <input type="number" id="itemCount" name="itemCount" min="1" class="input-field" required>
+                </div>
+
+                <div class="form-group special-instructions">
+                    <label for="instructions">Special Instructions (Optional)</label>
+                    <textarea id="instructions" name="instructions" class="input-field"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Place Order</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Food Delivery</h3>
+                <p>Delicious food delivered fast</p>
+                <p>123 Tasty Street</p>
+                <p>Foodville, FV 12345</p>
+            </div>
+            <div class="footer-section">
+                <h3>Hours</h3>
+                <p>Monday - Friday: 10am - 10pm</p>
+                <p>Saturday - Sunday: 11am - 11pm</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Phone: (123) 456-7890</p>
+                <p>Email: info@fooddelivery.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Food Delivery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Popup -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="success-icon">✓</div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for your order. We've received your details and will prepare your delicious food accordingly.</p>
+            <p class="order-number">Order #<span id="orderNumberDisplay">12345</span></p>
+            <button class="modal-btn">Track My Order</button>
+        </div>
+    </div>
+
+    <script src="booking-script.js"></script>
+</body>
+</html>

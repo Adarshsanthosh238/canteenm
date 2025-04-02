@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Canteen - Main Page</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+    /* Primary Color Palette */
+    --primary-green: #4CAF50;
+    --warm-coral: #FF6B6B;
+    --soft-yellow: #FFD700;
+    --light-green: #CAE676;
+    --vibrant-orange: #FF5722;
+    --deep-green: #2E7D32;
+
+    /* Neutral Colors */
+    --dark-text: #333333;
+    --soft-gray: #757575;
+    --background-light: #F5F5F5;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #000;
+            height: 30px;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--light-green), var(--warm-coral));
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo h1 {
+            color: var(--dark-text);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);   
+        }
+
+        .nav-menu {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .nav-menu li {
+            margin: 0 15px;
+        }
+
+        .nav-menu a {
+            color: var(--dark-text);
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+    color: var(--deep-green);
+}
+
+        .powered-by {
+            display: flex;
+            align-items: center;
+        }
+
+        .powered-by img {
+            height: 30px;
+        }
+
+        /* Hero Banner */
+        .hero-slider {
+            position: relative;
+            background-image: url('collage-various-food-products-260nw-1114876286.webp');
+            background-size: cover;
+            background-position: center;
+            background: linear-gradient(45deg, var(--light-green), var(--warm-coral));
+            height: 300px;
+            overflow: hidden;
+        }
+        
+
+        .slider-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            padding: 0 20px;
+        }
+
+        .slider-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 20px;
+        }
+
+        .slider-text h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .slider-text p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .btn-read-more {
+            background-color: var(--primary-green);
+             color: white;
+            transition: background-color 0.3s ease;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 3px;
+            width: fit-content;
+        }
+        .btn-read-more:hover {
+    background-color: var(--deep-green);
+}
+
+
+        .slider-image {
+            display: flex;
+            align-items: center;
+        }
+
+        .slider-image img {
+            height: 250px;
+            margin-top: 25px;
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider-dots {
+            display: flex;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            margin: 0 5px;
+            display: inline-block;
+        }
+
+        .dot.active {
+            background-color: white;
+        }
+
+        .prev, .next {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #989a8a;
+            background: linear-gradient(10deg, rgba(202, 230, 124, 0.501), rgb(159, 171, 155)), url(images/welcome.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+        }
+
+     .welcome-section h2 {
+    font-size: 2.8rem;
+    color: transparent;
+    background: linear-gradient(45deg, #f5551b, #a94860, #a12929, #8f8484);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(86, 86, 85, 0.2);
+    transition: all 0.3s ease;
+}
+   
+.welcome-section h2::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #ff4b4b, #ffeb3b);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+.welcome-section h2:hover {
+    transform: scale(1.05);
+}
+
+.welcome-section h2:hover::before {
+    width: 200px;
+}
+@media (max-width: 768px) {
+    .welcome-section h2 {
+        font-size: 2.2rem;
+        letter-spacing: 1px;
+    }
+}
+
+.feature-boxes {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.feature-box {
+    flex: 1;
+    background-color: rgba(254, 255, 239, 0.94);
+    border-radius: 15px; /* Added curved border radius */
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    perspective: 1000px; /* Added 3D perspective for depth */
+}
+
+.feature-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg, 
+        rgba(76, 175, 80, 0.1), 
+        rgba(76, 175, 80, 0.03)
+    );
+    transform: rotate(-45deg);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.feature-box:hover::before {
+    opacity: 1;
+}
+
+.feature-box:hover {
+    transform: translateY(-15px) rotateX(5deg);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+}
+
+.feature-box img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.feature-box:hover img {
+    transform: scale(1.05);
+    filter: brightness(110%) contrast(110%);
+}
+
+.feature-box-content {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.feature-box-content::after {
+    content: '';
+    position: absolute;
+    bottom: 3;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(to right, #a9c5aa, #81c784);
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.feature-box:hover .feature-box-content::after {
+    width: 100px;
+    opacity: 1;
+}
+
+.feature-box h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.feature-box:hover h3 {
+    color: #4CAF50;
+    transform: translateY(-5px);
+}
+
+.feature-box p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .feature-boxes {
+        flex-direction: column;
+    }
+    
+    .feature-box {
+        margin-bottom: 20px;
+    }
+}
+
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-section h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* CTA Button Styles */
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-green);
+            color: rgb(234, 242, 202);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049;
+            text-decoration: none;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: linear-gradient(to right, var(--dark-text), var(--soft-gray));
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+            padding-right: 20px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .footer-section p {
+            margin: 5px 0;
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+            color: #ddd;
+        }
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(10deg, rgba(181, 165, 22, 0), #eaebcf);
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+    color: #4CAF50;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Home Page */
+.home-container {
+    padding: 100px;
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #4CAF50;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.button-group {
+    margin-top: 30px;
+}
+
+.button {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #45a049;
+    text-decoration: none;
+}
+
+.button.secondary {
+    background-color: #555;
+}
+
+.button.secondary:hover {
+    background-color: #444;
+}
+
+/* Authentication Pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background-color: #45a049;
+}
+
+.auth-links {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.auth-divider {
+    margin: 0 10px;
+    color: #ddd;
+}
+
+.forgot-password {
+    color: #4CAF50;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 10px;
+    min-height: 20px;
+}
+
+/* Header Styles */
+/* Top Navigation Bar Styling */
+header {
+    background: linear-gradient(to right, #eaf1b1, #ff6b6b);
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.logo h1 {
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 0 15px;
+}
+
+.nav-menu a {
+    color: rgb(255, 248, 248);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: linear-gradient(to right, 
+        rgb(207, 7, 10), 
+        rgb(237, 109, 109), 
+        rgb(235, 165, 165)
+    );
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.nav-menu a:hover {
+    color: #f0f0f0;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.powered-by img {
+    max-height: 40px;
+    border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-menu {
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-menu li {
+        margin: 5px 10px;
+    }
+}
+/* Main Content Styles */
+main {
+    flex: 1;
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content-section {
+    background: linear-gradient(135deg, #d5ff6b, #ff4757);
+    color: rgb(123, 120, 120);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.content-section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.content-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    transform: rotate(-45deg);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.content-section:hover::before {
+    opacity: 1;
+}
+
+.content-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: rgb(178, 160, 160);
+    position: relative;
+    display: inline-block;
+}
+
+.content-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.content-section:hover h2::after {
+    width: 100%;
+}
+
+.content-section p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: white;
+    color: #47ff97;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    background-color: #b8ff47;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer Styles */
+footer {
+    background: linear-gradient(to right, var(--dark-text), var(--soft-gray));
+    color: white;
+    padding: 40px 0 20px;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.footer-section p {
+    margin: 5px 0;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    font-size: 14px;
+    color: #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 50px 20px;
+    }
+    
+    h1 {
+        font-size: 2.5em;
+    }
+    
+    .header-container {
+        flex-direction: row;
+        text-align: left;
+    }
+    
+    .logo h1 {
+        font-size: 20px; /* Slightly smaller for mobile but still visible */
+    }
+    
+    .nav-menu {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+    }
+    
+    .footer-section {
+        width: 100%;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container {
+        padding: 30px 15px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .nav-menu li {
+        margin: 5px 10px;
+    }
+    
+    .button {
+        padding: 12px 20px;
+        font-size: 16px;
+        display: block;
+        margin: 10px auto;
+    }
+}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slider-content {
+                flex-direction: column;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-menu {
+                margin-top: 15px;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 768px) {
+    .feature-boxes {
+        background: linear-gradient(to bottom, var(--light-green), var(--warm-coral));
+    }
+}
+body {
+    background: linear-gradient(135deg, #3cee3c81 0%, #cdede2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+        
+    </style>
+</head>
+<body>
+    <!-- Black Top Bar -->
+    <div class="top-bar"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <!-- Logo Section -->
+            <div class="logo">
+                <h1>Online Canteen</h1>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <!-- Add this script at the bottom of the file, just before </body> -->
+<script>
+    // Check if user is already logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        const loginMenuItem = document.querySelector('.nav-menu li:nth-child(2) a');
+        
+        if (loggedInUser && loginMenuItem) {
+            // If logged in, change the menu item from "Login" to "Menu"
+            loginMenuItem.textContent = "Menu";
+            loginMenuItem.href = "menu.html";
+        }
+    });
+</script>
+            <!-- Screencastify Logo (Optional - as shown in screenshot) -->
+          
+        </div>
+    </header>
+    
+    <!-- Hero Slider Banner (Added based on the image) -->
+    <div class="hero-slider">
+        <div class="slider-content">
+            <div class="slider-text">
+                <h2>ORDER YOUR<br>TASTY MEALS<br>ONLINE</h2>
+                <p>A tastiest<br>meal of your city</p>
+                <a href="#" class="btn-read-more">Read more</a>
+            </div>
+            <div class="slider-image">
+                <img src="/api/placeholder/400/250" alt="Grilled chicken with fries">
+            </div>
+        </div>
+        
+        <!-- Slider Navigation -->
+        <div class="slider-nav">
+            <a href="#" class="prev">&lt;</a>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <a href="#" class="next">&gt;</a>
+        </div>
+    </div>
+    
+    <!-- Welcome Section (Added based on the image) -->
+   <section class="welcome-section">
+    <h2>WELCOME TO ONLINE FOOD ORDERING SYSTEM</h2>
+    
+    <div class="feature-boxes">
+        <div class="feature-box">
+            <img src="images/collage-various-food-products-260nw-1114876286.webp" alt="Various food items">
+            <div class="feature-box-content">
+                <h3>Online Food Ordering System</h3>
+                <p>A health club (also known as a fitness club, fitness center, health spa, and commonly referred to as a gym) is a place...</p>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <img src="images/sanwich.jpg" alt="Sandwich with basil">
+            <div class="feature-box-content">
+                <h3>User Management System</h3>
+                <p>Most health clubs have a main workout area, which primarily consists of free weights including dumbbells...</p>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <img src="images/biriyani.jpg" alt="Grilled chicken with fries">
+            <div class="feature-box-content">
+                <h3>Trainer Management System</h3>
+                <p>This area often includes mirrors so that exercisers can monitor and maintain correct posture...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="content-section">
+            <h2>Our Menu</h2>
+            <p>Explore a wide variety of meals and snacks, freshly prepared just for you!</p>
+            <a href="menu.html" class="cta-button">View Menu</a>
+        </div>
+
+        <div class="content-section">
+            <h2>About Us</h2>
+            <p>We bring you delicious meals, fast delivery, and excellent customer service. Learn more about us and our story.</p>
+            <a href="about.html" class="cta-button">Learn More</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <!-- Company Contact Section -->
+            <div class="footer-section">
+                <h3>Company Contact</h3>
+                <p>pala, Kerala, India</p>
+                <p>8304926017</p>
+                <p>adrashsanthosh238@gmail.com</p>
+            </div>
+
+            <!-- Opening Hours Section -->
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p>Monday - Friday</p>
+                <p>09AM - 04PM</p>
+            </div>
+
+            <!-- Description Section -->
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Dedicated to providing you with delicious meals and excellent service, making your dining experience memorable.</p>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="copyright">
+            <p>&copy; 2025 Online Canteen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>src="auth-check.js"</script>
+</body>
+</html>

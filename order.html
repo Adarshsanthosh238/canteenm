@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Canteen - Order & Payment</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="menu-styles.css">
+    <style>
+       /* Order Page Improved Styles */
+.order-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.order-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.order-summary, .payment-section {
+    flex: 1;
+    min-width: 300px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary h3, .payment-section h3 {
+    color: #333;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.order-item:hover {
+    background-color: #f5f5f5;
+}
+
+.order-total {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.3em;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-top: 2px solid #4CAF50;
+    color: #2e7d32;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+.payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.payment-method {
+    flex: 1;
+    min-width: 100px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: white;
+}
+
+.payment-method:hover {
+    border-color: #4CAF50;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method.selected {
+    border-color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method img {
+    height: 45px;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+}
+
+.payment-method:hover img {
+    transform: scale(1.1);
+}
+
+.btn-pay {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+}
+
+.btn-pay:hover {
+    background-color: #45a049;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.btn-pay:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-pay:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-download {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+}
+
+.btn-download:hover {
+    background-color: #0b7dda;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.btn-download:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+    border-left: 5px solid #4CAF50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.success-message h3 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.card-details, .upi-details {
+    display: none;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.active-payment {
+    display: block;
+}
+
+/* Receipt Styles */
+/* Enhanced Receipt Styles */
+.receipt {
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    margin: 40px auto;
+    max-width: 650px;
+    display: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.6s ease-in-out;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.receipt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25px;
+    right: 25px;
+    height: 10px;
+    background-color: #4CAF50;
+    border-radius: 0 0 15px 15px;
+}
+
+.receipt-header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px dashed #ddd;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.receipt-header h2 {
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 1.8em;
+    letter-spacing: 1px;
+}
+
+.receipt-header p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.receipt-header h3 {
+    font-size: 1.6em;
+    color: #4CAF50;
+    margin-top: 20px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.receipt-customer {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 3px solid #4CAF50;
+}
+
+.receipt-customer p {
+    margin: 5px 0;
+    color: #444;
+}
+
+.receipt-items {
+    margin-bottom: 25px;
+}
+
+.receipt-items table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.receipt-items th {
+    background-color: #f5f5f5;
+    text-align: left;
+    color: #444;
+    padding: 12px;
+    font-size: 0.95em;
+    border-bottom: 2px solid #ddd;
+}
+
+.receipt-items td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.receipt-items tr:last-child td {
+    border-bottom: none;
+}
+
+.receipt-items tr:hover td {
+    background-color: #f9f9f9;
+}
+
+.item-discount {
+    color: #4CAF50;
+    font-size: 0.85em;
+    margin-left: 5px;
+}
+
+.receipt-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    color: #555;
+}
+
+.receipt-details:not(:last-of-type) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.receipt-total {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.receipt-total .receipt-details {
+    border-bottom: none;
+}
+
+.receipt-total .receipt-details:last-of-type {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #2e7d32;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #ddd;
+}
+
+.receipt-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #666;
+    border-top: 2px dashed #ddd;
+    padding-top: 20px;
+}
+
+.receipt-footer p {
+    margin: 8px 0;
+}
+
+.receipt-footer .thank-you {
+    font-size: 1.2em;
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.receipt-barcode {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.receipt-barcode img {
+    max-width: 200px;
+    height: auto;
+}
+
+.receipt-order-number {
+    font-family: 'Courier New', monospace;
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.btn-print-receipt {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f5f5f5;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-print-receipt:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.1);
+}
+
+.btn-print-receipt svg {
+    width: 20px;
+    height: 20px;
+    fill: #555;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .receipt, .receipt * {
+        visibility: visible;
+    }
+    
+    .receipt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 15px;
+        margin: 0;
+    }
+    
+    .btn-print-receipt, .btn-download {
+        display: none;
+    }
+    
+    .receipt::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .receipt {
+        padding: 20px;
+        margin: 20px 15px;
+    }
+    
+    .receipt::before {
+        left: 15px;
+        right: 15px;
+    }
+    
+    .receipt-header h2 {
+        font-size: 1.5em;
+    }
+    
+    .receipt-header h3 {
+        font-size: 1.3em;
+    }
+}
+
+/* Improve focus visibility for accessibility */
+:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+/* Print styles for receipt */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .receipt, .receipt * {
+        visibility: visible;
+    }
+    
+    .receipt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+    
+    .btn-download {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <!-- Logo Section -->
+            <div class="logo">
+                <h1>Online Canteen</h1>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="order-container">
+            <h2>Complete Your Order</h2>
+            
+            <div class="order-details">
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="order-items">
+                        <!-- Order items will be populated here by JavaScript -->
+                    </div>
+                    <div class="order-total">
+                        <span>Total Amount:</span>
+                        <span id="total-amount">₹0.00</span>
+                    </div>
+                </div>
+                
+                <div class="payment-section">
+                    <h3>Customer Information</h3>
+                    <div class="form-group">
+                        <label for="customer-name">Name</label>
+                        <input type="text" id="customer-name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-email">Email</label>
+                        <input type="email" id="customer-email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Phone</label>
+                        <input type="tel" id="customer-phone" placeholder="Enter your phone number">
+                    </div>
+                    
+                    <h3>Select Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="card">
+                            <img src="images/credit-card.png" alt="Credit Card">
+                            <p>Credit/Debit Card</p>
+                        </div>
+                        <div class="payment-method" data-method="upi">
+                            <img src="images/upi.png" alt="UPI">
+                            <p>UPI Payment</p>
+                        </div>
+                        <div class="payment-method" data-method="cash">
+                            <img src="images/cash.png" alt="Cash">
+                            <p>Cash on Delivery</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Credit Card Details Form -->
+                    <div class="card-details payment-form">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" placeholder="Enter name on card">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="text" id="expiry-date" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- UPI Details Form -->
+                    <div class="upi-details payment-form">
+                        <div class="form-group">
+                            <label for="upi-id">UPI ID</label>
+                            <input type="text" id="upi-id" placeholder="username@upi">
+                        </div>
+                    </div>
+                    
+                    <!-- Cash On Delivery - No additional fields needed -->
+                    
+                    <button class="btn-pay" id="pay-now-btn">Place Order</button>
+                </div>
+            </div>
+            
+           <!-- Replace the existing success-message div with this updated version -->
+<div class="success-message" id="success-message">
+    <h3>Order Placed Successfully!</h3>
+    <p>Thank you for your order. Your order has been received and is being processed.</p>
+    <div id="email-status-container">
+        <!-- Email status will be added here by JavaScript -->
+    </div>
+    <button class="btn-download" id="download-receipt-btn">Download Receipt</button>
+</div>
+            
+            <!-- Receipt Template for Download -->
+            <!-- Updated Receipt HTML Structure -->
+<div class="receipt" id="receipt">
+    <button class="btn-print-receipt" onclick="window.print();" title="Print Receipt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+        </svg>
+    </button>
+    
+    <div class="receipt-header">
+        <h2>Online Canteen</h2>
+        <p>123 Street, Kerala, India</p>
+        <p>Tel: +91 83049 26017</p>
+        <h3>RECEIPT</h3>
+        <p id="receipt-date"></p>
+        <p>Order #: <span id="receipt-number" class="receipt-order-number"></span></p>
+    </div>
+    
+    <div class="receipt-customer">
+        <p><strong>Customer:</strong> <span id="receipt-customer-name"></span></p>
+        <p><strong>Phone:</strong> <span id="receipt-customer-phone"></span></p>
+        <p><strong>Email:</strong> <span id="receipt-customer-email"></span></p>
+    </div>
+    
+    <div class="receipt-items" id="receipt-items">
+        <!-- Receipt items will be populated here by JavaScript -->
+    </div>
+    
+    <div class="receipt-total">
+        <div class="receipt-details">
+            <span>Subtotal:</span>
+            <span id="receipt-subtotal"></span>
+        </div>
+        <div class="receipt-details">
+            <span>GST (5%):</span>
+            <span id="receipt-tax"></span>
+        </div>
+        <div class="receipt-details">
+            <span>Total:</span>
+            <span id="receipt-total"></span>
+        </div>
+    </div>
+    
+    <div class="receipt-footer">
+        <p>Payment Method: <span id="receipt-payment-method"></span></p>
+        <p class="thank-you">Thank you for your order!</p>
+        <p>Visit us again soon.</p>
+        
+        <div class="receipt-barcode">
+            <!-- Placeholder for barcode - in a real app, generate dynamically -->
+            <svg width="200" height="40" viewBox="0 0 200 40">
+                <rect x="10" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="14" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="17" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="22" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="26" y="5" width="4" height="30" fill="#333"></rect>
+                <rect x="32" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="35" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="40" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="44" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="47" y="5" width="5" height="30" fill="#333"></rect>
+                <rect x="54" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="57" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="62" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="66" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="71" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="74" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="78" y="5" width="4" height="30" fill="#333"></rect>
+                <rect x="84" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="87" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="91" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="96" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="100" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="103" y="5" width="4" height="30" fill="#333"></rect>
+                <rect x="109" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="113" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="118" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="121" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="126" y="5" width="4" height="30" fill="#333"></rect>
+                <rect x="132" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="135" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="139" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="144" y="5" width="5" height="30" fill="#333"></rect>
+                <rect x="151" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="154" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="158" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="163" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="166" y="5" width="4" height="30" fill="#333"></rect>
+                <rect x="172" y="5" width="2" height="30" fill="#333"></rect>
+                <rect x="176" y="5" width="1" height="30" fill="#333"></rect>
+                <rect x="179" y="5" width="3" height="30" fill="#333"></rect>
+                <rect x="184" y="5" width="2" height="30" fill="#333"></rect>
+            </svg>
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <!-- Company Contact Section -->
+            <div class="footer-section">
+                <h3>Company Contact</h3>
+                <p>123 Street, Kerala, India</p>
+                <p>+91 83049 26017</p>
+                <p>adarshsanthosh238@gmail.com</p>
+            </div>
+
+            <!-- Opening Hours Section -->
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p>Monday - Friday</p>
+                <p>09AM - 04PM</p>
+            </div>
+
+            <!-- Description Section -->
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Dedicated to providing you with delicious meals and excellent service, making your dining experience memorable.</p>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="copyright">
+            <p>&copy; 2025 Online Canteen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Get order details from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('id');
+    const itemName = urlParams.get('name');
+    const itemPrice = urlParams.get('price');
+    const itemDiscount = urlParams.get('discount') || 0; // Add support for discount parameter
+    
+    // Function to populate order items from URL or localStorage
+    function populateOrderItems() {
+        const orderItemsContainer = document.getElementById('order-items');
+        let totalAmount = 0;
+        
+        // Clear previous items
+        orderItemsContainer.innerHTML = '';
+        
+        // Check if we have direct URL parameters
+        if (itemId && itemName && itemPrice) {
+            // Single item from direct order
+            const originalPrice = parseFloat(itemPrice);
+            const discount = parseFloat(itemDiscount);
+            const finalPrice = originalPrice - (originalPrice * (discount / 100));
+            totalAmount += finalPrice;
+            
+            const itemElement = document.createElement('div');
+            itemElement.className = 'order-item';
+            
+            // Show original price and discount if available
+            if (discount > 0) {
+                itemElement.innerHTML = `
+                    <span>${itemName}</span>
+                    <span>
+                        <del style="color: #999;">₹${originalPrice.toFixed(2)}</del> 
+                        ₹${finalPrice.toFixed(2)} <small style="color: green;">(-${discount}%)</small>
+                    </span>
+                `;
+            } else {
+                itemElement.innerHTML = `
+                    <span>${itemName}</span>
+                    <span>₹${finalPrice.toFixed(2)}</span>
+                `;
+            }
+            
+            orderItemsContainer.appendChild(itemElement);
+        } else {
+            // Try to get cart items from localStorage
+            try {
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                
+                if (cartItems.length === 0) {
+                    orderItemsContainer.innerHTML = '<p>No items in your order. Please add items from the menu.</p>';
+                    document.getElementById('pay-now-btn').disabled = true;
+                    return;
+                }
+                
+                cartItems.forEach(item => {
+                    const originalPrice = parseFloat(item.price);
+                    const discount = item.discount ? parseFloat(item.discount) : 0;
+                    const finalPrice = originalPrice - (originalPrice * (discount / 100));
+                    const totalItemPrice = finalPrice * item.quantity;
+                    
+                    totalAmount += totalItemPrice;
+                    
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'order-item';
+                    
+                    // Show original price and discount if available
+                    if (discount > 0) {
+                        itemElement.innerHTML = `
+                            <span>${item.name} x ${item.quantity}</span>
+                            <span>
+                                <del style="color: #999;">₹${(originalPrice * item.quantity).toFixed(2)}</del> 
+                                ₹${totalItemPrice.toFixed(2)} <small style="color: green;">(-${discount}%)</small>
+                            </span>
+                        `;
+                    } else {
+                        itemElement.innerHTML = `
+                            <span>${item.name} x ${item.quantity}</span>
+                            <span>₹${totalItemPrice.toFixed(2)}</span>
+                        `;
+                    }
+                    
+                    orderItemsContainer.appendChild(itemElement);
+                });
+            } catch (e) {
+                console.error('Error loading cart items:', e);
+                orderItemsContainer.innerHTML = '<p>Error loading order items. Please try again.</p>';
+            }
+        }
+        
+        // Update total amount
+        document.getElementById('total-amount').textContent = `₹${totalAmount.toFixed(2)}`;
+    }
+    
+    // Initial population of order items
+    populateOrderItems();
+    
+    // Payment method selection
+    const paymentMethods = document.querySelectorAll('.payment-method');
+    const cardDetails = document.querySelector('.card-details');
+    const upiDetails = document.querySelector('.upi-details');
+    
+    paymentMethods.forEach(method => {
+        method.addEventListener('click', function() {
+            // Remove selected class from all methods
+            paymentMethods.forEach(m => m.classList.remove('selected'));
+            
+            // Add selected class to clicked method
+            this.classList.add('selected');
+            
+            // Hide all payment forms
+            cardDetails.classList.remove('active-payment');
+            upiDetails.classList.remove('active-payment');
+            
+            // Show relevant form based on selected method
+            const methodType = this.getAttribute('data-method');
+            if (methodType === 'card') {
+                cardDetails.classList.add('active-payment');
+            } else if (methodType === 'upi') {
+                upiDetails.classList.add('active-payment');
+            }
+        });
+    });
+    
+    // Handle Payment Button Click
+    document.getElementById('pay-now-btn').addEventListener('click', function() {
+        // Very basic validation
+        const customerName = document.getElementById('customer-name').value;
+        const customerEmail = document.getElementById('customer-email').value;
+        const customerPhone = document.getElementById('customer-phone').value;
+        
+        if (!customerName || !customerEmail || !customerPhone) {
+            alert('Please fill in all customer information fields.');
+            return;
+        }
+        
+        // Check if a payment method is selected
+        const selectedMethod = document.querySelector('.payment-method.selected');
+        if (!selectedMethod) {
+            alert('Please select a payment method.');
+            return;
+        }
+        
+        const methodType = selectedMethod.getAttribute('data-method');
+        
+        // Validate payment details
+        if (methodType === 'card') {
+            const cardNumber = document.getElementById('card-number').value;
+            const cardName = document.getElementById('card-name').value;
+            const expiryDate = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+            
+            if (!cardNumber || !cardName || !expiryDate || !cvv) {
+                alert('Please fill in all card details.');
+                return;
+            }
+        } else if (methodType === 'upi') {
+            const upiId = document.getElementById('upi-id').value;
+            
+            if (!upiId) {
+                alert('Please enter your UPI ID.');
+                return;
+            }
+        }
+        
+        // Simulate payment processing
+        document.getElementById('pay-now-btn').textContent = 'Processing...';
+        document.getElementById('pay-now-btn').disabled = true;
+        
+        // Prepare receipt data
+        prepareReceipt(customerName, customerPhone, methodType);
+        
+        // Show success message after a delay (simulate processing)
+        setTimeout(function() {
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('pay-now-btn').textContent = 'Order Placed';
+            
+            // Clear cart if we're coming from the cart
+            if (!itemId) {
+                localStorage.removeItem('cartItems');
+            }
+        }, 1500);
+    });
+    
+    // Prepare receipt data
+    // Prepare receipt data with improved formatting
+function prepareReceipt(customerName, customerPhone, paymentMethod) {
+    const receipt = document.getElementById('receipt');
+    const date = new Date();
+    const customerEmail = document.getElementById('customer-email').value;
+    
+    // Generate random receipt number
+    const receiptNumber = 'ON' + date.getFullYear() + (date.getMonth() + 1).toString().padStart(2, '0') + date.getDate().toString().padStart(2, '0') + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    
+    // Set receipt header info
+    document.getElementById('receipt-date').textContent = 'Date: ' + date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('receipt-number').textContent = receiptNumber;
+    document.getElementById('receipt-customer-name').textContent = customerName;
+    document.getElementById('receipt-customer-phone').textContent = customerPhone;
+    document.getElementById('receipt-customer-email').textContent = customerEmail;
+    
+    // Populate receipt items
+    const receiptItemsContainer = document.getElementById('receipt-items');
+    let subtotal = 0;
+    
+    // Clear previous items
+    receiptItemsContainer.innerHTML = `
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Item</th>
+                    <th style="text-align: right;">Price</th>
+                </tr>
+            </thead>
+            <tbody id="receipt-items-body"></tbody>
+        </table>
+    `;
+    
+    const receiptItemsBody = document.getElementById('receipt-items-body');
+    
+    // Populate items from order
+    if (itemId && itemName && itemPrice) {
+        // Single item from direct order
+        const originalPrice = parseFloat(itemPrice);
+        const discount = parseFloat(itemDiscount);
+        const finalPrice = originalPrice - (originalPrice * (discount / 100));
+        subtotal += finalPrice;
+        
+        const itemRow = document.createElement('tr');
+        if (discount > 0) {
+            itemRow.innerHTML = `
+                <td>${itemName} <span class="item-discount">(-${discount}%)</span></td>
+                <td style="text-align: right;">₹${finalPrice.toFixed(2)}</td>
+            `;
+        } else {
+            itemRow.innerHTML = `
+                <td>${itemName}</td>
+                <td style="text-align: right;">₹${finalPrice.toFixed(2)}</td>
+            `;
+        }
+        receiptItemsBody.appendChild(itemRow);
+    } else {
+        // Items from cart
+        try {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            cartItems.forEach(item => {
+                const originalPrice = parseFloat(item.price);
+                const discount = item.discount ? parseFloat(item.discount) : 0;
+                const finalPrice = originalPrice - (originalPrice * (discount / 100));
+                const totalItemPrice = finalPrice * item.quantity;
+                
+                subtotal += totalItemPrice;
+                
+                const itemRow = document.createElement('tr');
+                if (discount > 0) {
+                    itemRow.innerHTML = `
+                        <td>${item.name} x ${item.quantity} <span class="item-discount">(-${discount}%)</span></td>
+                        <td style="text-align: right;">₹${totalItemPrice.toFixed(2)}</td>
+                    `;
+                } else {
+                    itemRow.innerHTML = `
+                        <td>${item.name} x ${item.quantity}</td>
+                        <td style="text-align: right;">₹${totalItemPrice.toFixed(2)}</td>
+                    `;
+                }
+                receiptItemsBody.appendChild(itemRow);
+            });
+        } catch (e) {
+            console.error('Error loading cart items for receipt:', e);
+        }
+    }
+    
+    // Calculate tax and total
+    const tax = subtotal * 0.05; // 5% GST
+    const total = subtotal + tax;
+    
+    // Update receipt totals
+    document.getElementById('receipt-subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+    document.getElementById('receipt-tax').textContent = `₹${tax.toFixed(2)}`;
+    document.getElementById('receipt-total').textContent = `₹${total.toFixed(2)}`;
+    
+    // Set payment method
+    let paymentMethodText = 'Cash on Delivery';
+    if (paymentMethod === 'card') {
+        paymentMethodText = 'Credit/Debit Card';
+    } else if (paymentMethod === 'upi') {
+        paymentMethodText = 'UPI Payment';
+    }
+    document.getElementById('receipt-payment-method').textContent = paymentMethodText;
+}
+
+// Modify the Download Receipt Button handler for better UX
+document.getElementById('download-receipt-btn').addEventListener('click', function() {
+    const receipt = document.getElementById('receipt');
+    receipt.style.display = 'block';
+    
+    // Scroll to receipt with a smooth animation
+    receipt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Add a small animation to highlight the print button
+    const printButton = document.querySelector('.btn-print-receipt');
+    setTimeout(() => {
+        printButton.style.animation = 'pulse 1s ease-in-out 2';
+    }, 1000);
+});
+    
+    // Handle Download Receipt Button
+    document.getElementById('download-receipt-btn').addEventListener('click', function() {
+        // In a real implementation, you would use a library like jsPDF or html2canvas
+        // For this example, we'll just show the receipt and offer it for print
+        const receipt = document.getElementById('receipt');
+        receipt.style.display = 'block';
+        
+        // Scroll to receipt
+        receipt.scrollIntoView({ behavior: 'smooth' });
+        
+        // Offer to print after a short delay
+        setTimeout(function() {
+            if (confirm('Would you like to print your receipt?')) {
+                window.print();
+            }
+        }, 1000);
+    });
+});
+
+// Add this to the existing script.js file or within the script tag in order.html
+// Email confirmation functionality
+
+// Function to simulate sending an email
+// Update the sendOrderConfirmationEmail function to call the backend API
+// Updated sendOrderConfirmationEmail function
+
+async function sendOrderConfirmationEmail(email, receiptNumber, orderDetails, totalAmount) {
+    try {
+        console.log('Attempting to send email to:', email);
+        
+        const response = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                receiptNumber,
+                orderDetails,
+                totalAmount
+            }),
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            console.log('Email sent successfully');
+            return true;
+        } else {
+            console.error('Error sending email:', data.message);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return false;
+    }
+}
+
+// Fix the email field reference in the pay-now-btn click handler
+document.addEventListener('DOMContentLoaded', function() {
+    const payNowBtn = document.getElementById('pay-now-btn');
+    if (payNowBtn) {
+        payNowBtn.addEventListener('click', async function() {
+            // Very basic validation
+            const customerName = document.getElementById('customer-name').value;
+            const customerEmail = document.getElementById('customer-email').value; // This matches your HTML input id
+            const customerPhone = document.getElementById('customer-phone').value;
+            
+            if (!customerName || !customerEmail || !customerPhone) {
+                alert('Please fill in all customer information fields.');
+                return;
+            }
+            
+            // Rest of your validation code...
+            
+            // Check if a payment method is selected
+            const selectedMethod = document.querySelector('.payment-method.selected');
+            if (!selectedMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+            
+            const methodType = selectedMethod.getAttribute('data-method');
+            
+            // Payment method validation...
+            
+            // Simulate payment processing
+            payNowBtn.textContent = 'Processing...';
+            payNowBtn.disabled = true;
+            
+            // Get order details for email
+            let orderItems = [];
+            let totalAmount = 0;
+            
+            // Check if we have direct URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+            const itemName = urlParams.get('name');
+            const itemPrice = urlParams.get('price');
+            const itemDiscount = urlParams.get('discount') || 0;
+            
+            if (itemId && itemName && itemPrice) {
+                // Single item from direct order
+                const originalPrice = parseFloat(itemPrice);
+                const discount = parseFloat(itemDiscount);
+                const finalPrice = originalPrice - (originalPrice * (discount / 100));
+                totalAmount = finalPrice;
+                
+                orderItems.push({
+                    name: itemName,
+                    price: finalPrice.toFixed(2),
+                    quantity: 1,
+                    totalPrice: finalPrice.toFixed(2)
+                });
+            } else {
+                // Try to get cart items from localStorage
+                try {
+                    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                    
+                    cartItems.forEach(item => {
+                        const originalPrice = parseFloat(item.price);
+                        const discount = item.discount ? parseFloat(item.discount) : 0;
+                        const finalPrice = originalPrice - (originalPrice * (discount / 100));
+                        const totalItemPrice = finalPrice * item.quantity;
+                        
+                        totalAmount += totalItemPrice;
+                        
+                        orderItems.push({
+                            name: item.name,
+                            price: finalPrice.toFixed(2),
+                            quantity: item.quantity,
+                            totalPrice: totalItemPrice.toFixed(2)
+                        });
+                    });
+                } catch (e) {
+                    console.error('Error loading cart items:', e);
+                }
+            }
+            
+            // Generate receipt number
+            const date = new Date();
+            const receiptNumber = 'ON' + date.getFullYear() + (date.getMonth() + 1).toString().padStart(2, '0') + date.getDate().toString().padStart(2, '0') + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            
+            // Prepare receipt data for display
+            prepareReceipt(customerName, customerPhone, methodType);
+            
+            // Send confirmation email
+            try {
+                // Show email sending status
+                const emailStatusContainer = document.getElementById('email-status-container');
+                emailStatusContainer.innerHTML = `<p id="email-status">Sending confirmation email to ${customerEmail}...</p>`;
+                
+                // Send the email
+                const emailSent = await sendOrderConfirmationEmail(
+                    customerEmail, // Make sure to use customerEmail here
+                    receiptNumber,
+                    orderItems,
+                    totalAmount.toFixed(2)
+                );
+                
+                // Update email status
+                const emailStatus = document.getElementById('email-status');
+                if (emailSent) {
+                    emailStatus.innerHTML = `<span style="color: #4CAF50;">✓ Confirmation email sent to ${customerEmail}</span>`;
+                } else {
+                    emailStatus.innerHTML = `<span style="color: #f44336;">× Failed to send confirmation email. Please check your order details in the receipt.</span>`;
+                }
+                
+                // Show success message
+                document.getElementById('success-message').style.display = 'block';
+                payNowBtn.textContent = 'Order Placed';
+                
+                // Clear cart if we're coming from the cart
+                if (!itemId) {
+                    localStorage.removeItem('cartItems');
+                }
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert('Your order was processed, but we had trouble sending the confirmation email. Please keep your receipt for reference.');
+                
+                // Still show success message for the order
+                document.getElementById('success-message').style.display = 'block';
+                payNowBtn.textContent = 'Order Placed';
+            }
+        });
+    }
+});
+// Add this function to test API connectivity
+async function testApiConnection() {
+    try {
+        const response = await fetch('/api/ping');
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('API connection test successful:', data);
+        return true;
+    } catch (error) {
+        console.error('API connection test failed:', error);
+        return false;
+    }
+}
+
+// Call this when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Test API connection on page load
+    testApiConnection().then(isConnected => {
+        if (!isConnected) {
+            // Add a warning banner if API isn't reachable
+            const banner = document.createElement('div');
+            banner.style = "background-color: #ffdddd; color: #990000; padding: 10px; text-align: center; margin-bottom: 15px;";
+            banner.innerHTML = "<strong>Warning:</strong> Cannot connect to the email service. Email confirmations may not work.";
+            document.querySelector('.order-container').prepend(banner);
+        }
+    });
+    
+    // Your existing DOMContentLoaded code...
+});
+    </script>
+    <button id="test-email-btn" style="margin-top: 20px; background-color: #f0f0f0; padding: 10px; cursor: pointer;">Test Email Function</button>
+
+    <script>
+   document.getElementById('test-email-btn').addEventListener('click', async function() {
+    const email = document.getElementById('customer-email').value;
+    if (!email) {
+        alert('Please enter an email address to test');
+        return;
+    }
+    
+    try {
+        // Show testing indicator
+        this.textContent = 'Testing...';
+        this.disabled = true;
+        
+        const response = await fetch(`/api/test-email?email=${encodeURIComponent(email)}`);
+        
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        alert(result.success ? 'Test email sent successfully!' : 'Error sending test email: ' + result.message);
+    } catch (error) {
+        console.error('Test email error:', error);
+        alert('Error testing email: ' + error.message);
+    } finally {
+        // Reset button
+        this.textContent = 'Test Email Function';
+        this.disabled = false;
+    }
+});
+    </script>
+</body>
+</html>
